@@ -22,6 +22,7 @@ import Controls from './Controls.js'
 import Sounds from './Sounds.js'
 import gsap from 'gsap'
 import EasterEggs from './EasterEggs.js'
+import Christmas from './Christmas.js'
 
 export default class World
 {
@@ -76,6 +77,7 @@ export default class World
         this.setWalls()
         this.setSections()
         this.setEasterEggs()
+        this.setChristmas()
     }
 
     setReveal()
@@ -508,5 +510,14 @@ export default class World
             physics: this.physics
         })
         this.container.add(this.easterEggs.container)
+    }
+
+    setChristmas()
+    {
+        this.christmas = new Christmas({
+            scene: this.container,
+            time: this.time,
+            renderer: this.renderer
+        })
     }
 }

@@ -109,6 +109,15 @@ export default class Car
 
         this.shadows.add(this.chassis.object, { sizeX: 3, sizeY: 2, offsetZ: 0.2 })
 
+        // Santa Car Red Theme
+        this.chassis.object.traverse((_child) =>
+        {
+            if(_child instanceof THREE.Mesh)
+            {
+                _child.material = this.materials.shades.items.red
+            }
+        })
+
         // Time tick
         this.time.on('tick', () =>
         {

@@ -157,13 +157,48 @@ export default class InformationSection
         // Geometry
         this.activities.geometry = new THREE.PlaneGeometry(2 * this.activities.multiplier, 1 * this.activities.multiplier, 1, 1)
 
+        // Canvas Texture
+        this.activities.canvas = document.createElement('canvas')
+        this.activities.canvas.width = 1024
+        this.activities.canvas.height = 512
+        this.activities.context = this.activities.canvas.getContext('2d')
+
+        // Fill background
+        this.activities.context.fillStyle = '#00000000' // Transparent
+        this.activities.context.fillRect(0, 0, this.activities.canvas.width, this.activities.canvas.height)
+
+        // Text settings
+        this.activities.context.font = '700 30px "Inter", sans-serif'
+        this.activities.context.textAlign = 'left'
+        this.activities.context.textBaseline = 'top'
+        this.activities.context.fillStyle = '#ffffff'
+
+        // Content
+        const lines = [
+            { text: 'EXPERIENCE', font: '700 40px "Inter", sans-serif', y: 0 },
+            { text: 'MathCo', font: '700 30px "Inter", sans-serif', y: 60 },
+            { text: 'Product Engineer I (Jul 2025 - Present)', font: '400 24px "Inter", sans-serif', y: 100 },
+             { text: 'Product Engineering Intern (Jan 2025 - Jul 2025)', font: '400 24px "Inter", sans-serif', y: 130 },
+            { text: 'Konnexions-KIIT', font: '700 30px "Inter", sans-serif', y: 180 },
+            { text: 'Coordinator (Aug 2024 - Sep 2025)', font: '400 24px "Inter", sans-serif', y: 220 },
+            { text: 'Assistant Coordinator (Aug 2023 - Aug 2024)', font: '400 24px "Inter", sans-serif', y: 250 },
+            { text: 'USC.KIIT', font: '700 30px "Inter", sans-serif', y: 300 },
+            { text: 'ML Lead (Jun 2024 - Jan 2025)', font: '400 24px "Inter", sans-serif', y: 340 }
+        ]
+
+        for(const line of lines)
+        {
+            this.activities.context.font = line.font
+            this.activities.context.fillText(line.text, 0, line.y)
+        }
+
         // Texture
-        this.activities.texture = this.resources.items.informationActivitiesTexture
+        this.activities.texture = new THREE.CanvasTexture(this.activities.canvas)
         this.activities.texture.magFilter = THREE.NearestFilter
         this.activities.texture.minFilter = THREE.LinearFilter
-
+        
         // Material
-        this.activities.material = new THREE.MeshBasicMaterial({ wireframe: false, color: 0xffffff, alphaMap: this.activities.texture, transparent: true })
+        this.activities.material = new THREE.MeshBasicMaterial({ wireframe: false, color: 0xffffff, alphaMap: this.activities.texture, transparent: true, opacity: 1 })
 
         // Mesh
         this.activities.mesh = new THREE.Mesh(this.activities.geometry, this.activities.material)
