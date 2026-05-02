@@ -27,8 +27,71 @@ export default class IntroSection
         this.setInstructions()
         this.setOtherInstructions()
         this.setTitles()
+        this.setIntroToys()
         this.setTiles()
         this.setDikes()
+    }
+
+    setIntroToys()
+    {
+        // Sprinkle a few physics props around the title so the user has
+        // something to bump into right after landing on the page.
+        this.introToys = {}
+
+        // Cones flanking the title row
+        this.introToys.cones = []
+        const conePositions = [
+            [- 8, - 9],
+            [- 7, - 9],
+            [  7, - 9],
+            [  8, - 9]
+        ]
+        for(const [cx, cy] of conePositions)
+        {
+            this.introToys.cones.push(this.objects.add({
+                base: this.resources.items.coneBase.scene,
+                collision: this.resources.items.coneCollision.scene,
+                offset: new THREE.Vector3(cx, cy, 0),
+                rotation: new THREE.Euler(0, 0, 0),
+                duplicated: true,
+                shadow: { sizeX: 1.2, sizeY: 1.2, offsetZ: - 0.15, alpha: 0.4 },
+                mass: 0.4,
+                soundName: 'woodHit'
+            }))
+        }
+
+        // A trio of lemons rolling near the title
+        this.introToys.lemons = []
+        const lemonPositions = [
+            [- 3.5, - 6.5],
+            [- 2.5, - 6.2],
+            [  3.0, - 6.5]
+        ]
+        for(const [lx, ly] of lemonPositions)
+        {
+            this.introToys.lemons.push(this.objects.add({
+                base: this.resources.items.lemonBase.scene,
+                collision: this.resources.items.lemonCollision.scene,
+                offset: new THREE.Vector3(lx, ly, 0.4),
+                rotation: new THREE.Euler(Math.random(), Math.random(), Math.random()),
+                duplicated: true,
+                shadow: { sizeX: 0.7, sizeY: 0.7, offsetZ: - 0.15, alpha: 0.35 },
+                mass: 0.18,
+                soundName: 'woodHit'
+            }))
+        }
+
+        // A heavy awwwards trophy as a centrepiece
+        this.introToys.trophy = this.objects.add({
+            base: this.resources.items.awwwardsTrophyBase.scene,
+            collision: this.resources.items.awwwardsTrophyCollision.scene,
+            offset: new THREE.Vector3(0, - 5, 0),
+            rotation: new THREE.Euler(0, 0, 0),
+            duplicated: true,
+            shadow: { sizeX: 1.3, sizeY: 1.3, offsetZ: - 0.15, alpha: 0.4 },
+            mass: 2.0,
+            soundName: 'brick'
+        })
     }
 
     setStatic()

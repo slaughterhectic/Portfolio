@@ -177,13 +177,13 @@ export default class Resources extends EventEmitter
             // { name: 'distinctionCStaticCollision', source: './models/distinctionC/static/collision.glb' },
             // { name: 'distinctionCStaticFloorShadow', source: './models/distinctionC/static/floorShadow.png', type: 'texture' },
 
-            // // Cone
-            // { name: 'coneBase', source: './models/cone/base.glb' },
-            // { name: 'coneCollision', source: './models/cone/collision.glb' },
+            // Cone
+            { name: 'coneBase', source: './models/cone/base.glb' },
+            { name: 'coneCollision', source: './models/cone/collision.glb' },
 
-            // // Awwwards trophy
-            // { name: 'awwwardsTrophyBase', source: './models/awwwardsTrophy/base.glb' },
-            // { name: 'awwwardsTrophyCollision', source: './models/awwwardsTrophy/collision.glb' },
+            // Awwwards trophy
+            { name: 'awwwardsTrophyBase', source: './models/awwwardsTrophy/base.glb' },
+            { name: 'awwwardsTrophyCollision', source: './models/awwwardsTrophy/collision.glb' },
 
             // Webby trophy
             { name: 'webbyTrophyBase', source: './models/webbyTrophy/base.glb' },
@@ -234,9 +234,9 @@ export default class Resources extends EventEmitter
             { name: 'wig3', source: './models/wigs/wig3.glb' },
             { name: 'wig4', source: './models/wigs/wig4.glb' },
 
-            // // Egg
-            // { name: 'eggBase', source: './models/egg/base.glb' },
-            // { name: 'eggCollision', source: './models/egg/collision.glb' },
+            // Egg
+            { name: 'eggBase', source: './models/egg/base.glb' },
+            { name: 'eggCollision', source: './models/egg/collision.glb' },
         ])
 
         this.loader.on('fileEnd', (_resource, _data) =>

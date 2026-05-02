@@ -32,6 +32,159 @@ export default class PlaygroundSection
         this.setStatic()
         this.setBricksWalls()
         this.setBowling()
+        this.setToys()
+    }
+
+    setToys()
+    {
+        // A pocket of the playground filled with mixed-mass physics props.
+        // Each toy uses a different mass / shadow / sound so the same drive-
+        // through-and-knock-stuff-over mechanic feels distinct per group.
+        this.toys = {}
+        this.toys.x = this.x - 12
+        this.toys.y = this.y - 6
+
+        // ---- Traffic cones - a slalom row, medium mass, wood-clack sound
+        this.toys.cones = []
+        for(let i = 0; i < 6; i++)
+        {
+            this.toys.cones.push(this.objects.add({
+                base: this.resources.items.coneBase.scene,
+                collision: this.resources.items.coneCollision.scene,
+                offset: new THREE.Vector3(this.toys.x + i * 2.2, this.toys.y, 0),
+                rotation: new THREE.Euler(0, 0, 0),
+                duplicated: true,
+                shadow: { sizeX: 1.2, sizeY: 1.2, offsetZ: - 0.15, alpha: 0.4 },
+                mass: 0.4,
+                soundName: 'woodHit'
+            }))
+        }
+
+        // ---- Awwwards trophy stack - heavy, harder to topple
+        this.toys.trophies = []
+        const trophyPositions = [
+            [this.toys.x - 4, this.toys.y - 4],
+            [this.toys.x - 2, this.toys.y - 4],
+            [this.toys.x, this.toys.y - 4]
+        ]
+        for(const [tx, ty] of trophyPositions)
+        {
+            this.toys.trophies.push(this.objects.add({
+                base: this.resources.items.awwwardsTrophyBase.scene,
+                collision: this.resources.items.awwwardsTrophyCollision.scene,
+                offset: new THREE.Vector3(tx, ty, 0),
+                rotation: new THREE.Euler(0, 0, 0),
+                duplicated: true,
+                shadow: { sizeX: 1.3, sizeY: 1.3, offsetZ: - 0.15, alpha: 0.4 },
+                mass: 2.0,
+                soundName: 'brick'
+            }))
+        }
+
+        // ---- Egg crate - very light, scatter on the slightest tap
+        this.toys.eggs = []
+        for(let i = 0; i < 12; i++)
+        {
+            const ex = this.toys.x + 4 + (i % 4) * 0.9
+            const ey = this.toys.y - 4 + Math.floor(i / 4) * 0.9
+            this.toys.eggs.push(this.objects.add({
+                base: this.resources.items.eggBase.scene,
+                collision: this.resources.items.eggCollision.scene,
+                offset: new THREE.Vector3(ex, ey, 0.3),
+                rotation: new THREE.Euler(0, 0, Math.random() * Math.PI),
+                duplicated: true,
+                shadow: { sizeX: 0.7, sizeY: 0.7, offsetZ: - 0.15, alpha: 0.35 },
+                mass: 0.12,
+                soundName: 'woodHit'
+            }))
+        }
+
+        // ---- Webby trophy duo - heavier display piece
+        this.toys.webby = []
+        for(let i = 0; i < 2; i++)
+        {
+            this.toys.webby.push(this.objects.add({
+                base: this.resources.items.webbyTrophyBase.scene,
+                collision: this.resources.items.webbyTrophyCollision.scene,
+                offset: new THREE.Vector3(this.toys.x + 10 + i * 2, this.toys.y, 0),
+                rotation: new THREE.Euler(0, 0, 0),
+                duplicated: true,
+                shadow: { sizeX: 1.4, sizeY: 1.4, offsetZ: - 0.15, alpha: 0.4 },
+                mass: 1.8,
+                soundName: 'brick'
+            }))
+        }
+
+        // ---- Lemon orchard - bouncy citrus pile
+        this.toys.lemons = []
+        for(let i = 0; i < 8; i++)
+        {
+            const lx = this.toys.x + 12 + (i % 4) * 0.9
+            const ly = this.toys.y - 4 + Math.floor(i / 4) * 0.9
+            this.toys.lemons.push(this.objects.add({
+                base: this.resources.items.lemonBase.scene,
+                collision: this.resources.items.lemonCollision.scene,
+                offset: new THREE.Vector3(lx, ly, 0.4),
+                rotation: new THREE.Euler(Math.random(), Math.random(), Math.random()),
+                duplicated: true,
+                shadow: { sizeX: 0.7, sizeY: 0.7, offsetZ: - 0.15, alpha: 0.35 },
+                mass: 0.18,
+                soundName: 'woodHit'
+            }))
+        }
+
+        // ---- Diet-Coke-ish tower: vertical stack of orange bricks
+        // (no soda-can model ships in the repo, so we fake it with bricks).
+        this.toys.cokeTower = []
+        const towerX = this.toys.x + 18
+        const towerY = this.toys.y - 1
+        for(let i = 0; i < 8; i++)
+        {
+            this.toys.cokeTower.push(this.objects.add({
+                base: this.resources.items.brickBase.scene,
+                collision: this.resources.items.brickCollision.scene,
+                offset: new THREE.Vector3(towerX, towerY, 0.45 + i * 0.5),
+                rotation: new THREE.Euler(0, 0, i % 2 === 0 ? 0 : Math.PI * 0.5),
+                duplicated: true,
+                shadow: { sizeX: 1.2, sizeY: 1.8, offsetZ: - 0.15, alpha: 0.35 },
+                mass: 0.5,
+                soundName: 'brick'
+            }))
+        }
+
+        // ---- Reset all toys via a marked area
+        this.toys.reset = () =>
+        {
+            const groups = [this.toys.cones, this.toys.trophies, this.toys.eggs, this.toys.webby, this.toys.lemons, this.toys.cokeTower]
+            for(const group of groups)
+            {
+                for(const item of group)
+                {
+                    item.collision.reset()
+                }
+            }
+        }
+
+        this.toys.resetArea = this.areas.add({
+            position: new THREE.Vector2(this.toys.x + 18, this.toys.y - 5),
+            halfExtents: new THREE.Vector2(2, 2)
+        })
+        this.toys.resetArea.on('interact', () =>
+        {
+            this.toys.reset()
+        })
+
+        this.toys.areaLabelMesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 0.5), new THREE.MeshBasicMaterial({ transparent: true, depthWrite: false, color: 0xffffff, alphaMap: this.resources.items.areaResetTexture }))
+        this.toys.areaLabelMesh.position.x = this.toys.x + 18
+        this.toys.areaLabelMesh.position.y = this.toys.y - 5
+        this.toys.areaLabelMesh.matrixAutoUpdate = false
+        this.toys.areaLabelMesh.updateMatrix()
+        this.container.add(this.toys.areaLabelMesh)
+
+        if(this.debugFolder)
+        {
+            this.debugFolder.add(this.toys, 'reset').name('toys reset')
+        }
     }
 
     setStatic()
