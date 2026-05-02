@@ -59,7 +59,7 @@ export default class Car
         // Default
         else
         {
-            this.models.chassis = this.resources.items.carCyberTruckChassis
+            this.models.chassis = this.resources.items.carDefaultChassis
             this.models.antena = this.resources.items.carDefaultAntena
             this.models.backLightsBrake = this.resources.items.carDefaultBackLightsBrake
             this.models.backLightsReverse = this.resources.items.carDefaultBackLightsReverse
@@ -109,14 +109,8 @@ export default class Car
 
         this.shadows.add(this.chassis.object, { sizeX: 3, sizeY: 2, offsetZ: 0.2 })
 
-        // Santa Car Red Theme
-        this.chassis.object.traverse((_child) =>
-        {
-            if(_child instanceof THREE.Mesh)
-            {
-                _child.material = this.materials.shades.items.red
-            }
-        })
+        // (Removed the all-red override - the default car GLB already has
+        // proper per-mesh materials for body, windows, lights, etc.)
 
         // Time tick
         this.time.on('tick', () =>

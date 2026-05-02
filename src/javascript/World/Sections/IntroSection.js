@@ -34,38 +34,13 @@ export default class IntroSection
 
     setIntroToys()
     {
-        // Sprinkle a few physics props around the title so the user has
-        // something to bump into right after landing on the page.
+        // Two lemons rolling near the title - just enough to feel alive,
+        // not enough to clutter the entrance.
         this.introToys = {}
-
-        // Cones flanking the title row
-        this.introToys.cones = []
-        const conePositions = [
-            [- 8, - 9],
-            [- 7, - 9],
-            [  7, - 9],
-            [  8, - 9]
-        ]
-        for(const [cx, cy] of conePositions)
-        {
-            this.introToys.cones.push(this.objects.add({
-                base: this.resources.items.coneBase.scene,
-                collision: this.resources.items.coneCollision.scene,
-                offset: new THREE.Vector3(cx, cy, 0),
-                rotation: new THREE.Euler(0, 0, 0),
-                duplicated: true,
-                shadow: { sizeX: 1.2, sizeY: 1.2, offsetZ: - 0.15, alpha: 0.4 },
-                mass: 0.4,
-                soundName: 'woodHit'
-            }))
-        }
-
-        // A trio of lemons rolling near the title
         this.introToys.lemons = []
         const lemonPositions = [
-            [- 3.5, - 6.5],
-            [- 2.5, - 6.2],
-            [  3.0, - 6.5]
+            [- 7, - 6.5],
+            [  7, - 6.5]
         ]
         for(const [lx, ly] of lemonPositions)
         {
@@ -80,18 +55,6 @@ export default class IntroSection
                 soundName: 'woodHit'
             }))
         }
-
-        // A heavy awwwards trophy as a centrepiece
-        this.introToys.trophy = this.objects.add({
-            base: this.resources.items.awwwardsTrophyBase.scene,
-            collision: this.resources.items.awwwardsTrophyCollision.scene,
-            offset: new THREE.Vector3(0, - 5, 0),
-            rotation: new THREE.Euler(0, 0, 0),
-            duplicated: true,
-            shadow: { sizeX: 1.3, sizeY: 1.3, offsetZ: - 0.15, alpha: 0.4 },
-            mass: 2.0,
-            soundName: 'brick'
-        })
     }
 
     setStatic()
