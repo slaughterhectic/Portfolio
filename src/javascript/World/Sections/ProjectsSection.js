@@ -70,9 +70,8 @@ export default class ProjectsSection
     setList()
     {
         this.list = [
-            
             {
-                name: 'Real Time Pothole Detection',
+                name: 'Road Anomaly Detection - UK Patent',
                 imageSources:
                 [
                     './models/projects/chartogne/slideA.jpg',
@@ -93,7 +92,7 @@ export default class ProjectsSection
                 },
             },
             {
-                name: 'Rule Builder Application', 
+                name: 'Multi-Tenant RAG Chatbot - Osten Group',
                 imageSources:
                 [
                     './models/projects/bonhomme10ans/slideA.jpg',
@@ -102,7 +101,7 @@ export default class ProjectsSection
                 floorTexture: this.resources.items.projectsBonhomme10ansFloorTexture,
                 link:
                 {
-                    href: 'https://github.com/slaughterhectic/MY_Decision_Hub.git',
+                    href: 'https://github.com/slaughterhectic',
                     x: - 4.8,
                     y: - 2,
                     halfExtents:
@@ -113,7 +112,69 @@ export default class ProjectsSection
                 },
             },
             {
-                name: 'Alzhemer Disease Detection', 
+                name: 'Resume AI - Tailoring & AI Interviewer',
+                imageSources:
+                [
+                    './models/projects/madbox/slideA.jpg',
+                    './models/projects/madbox/slideB.jpg'
+                ],
+                floorTexture: this.resources.items.projectsMadboxFloorTexture,
+                link:
+                {
+                    href: 'https://github.com/slaughterhectic',
+                    x: - 4.8,
+                    y: - 2,
+                    halfExtents:
+                    {
+                        x: 3.2,
+                        y: 1.5
+                    }
+                },
+            },
+            {
+                name: 'CodeGang - SaaS Embedding & RAG Platform',
+                imageSources:
+                [
+                    './models/projects/scout/slideA.jpg',
+                    './models/projects/scout/slideB.jpg',
+                    './models/projects/scout/slideC.jpg'
+                ],
+                floorTexture: this.resources.items.projectsScoutFloorTexture,
+                link:
+                {
+                    href: 'https://codegang.online',
+                    x: - 4.8,
+                    y: - 2,
+                    halfExtents:
+                    {
+                        x: 3.2,
+                        y: 1.5
+                    }
+                },
+            },
+            {
+                name: 'Payment & Expense Tracker - Supply Chain',
+                imageSources:
+                [
+                    './models/projects/orano/slideA.jpg',
+                    './models/projects/orano/slideB.jpg',
+                    './models/projects/orano/slideC.jpg'
+                ],
+                floorTexture: this.resources.items.projectsOranoFloorTexture,
+                link:
+                {
+                    href: 'https://github.com/slaughterhectic',
+                    x: - 4.8,
+                    y: - 2,
+                    halfExtents:
+                    {
+                        x: 3.2,
+                        y: 1.5
+                    }
+                },
+            },
+            {
+                name: "Alzheimer's MRI Classification - ICMLDE 2024",
                 imageSources:
                 [
                     './models/projects/keppler/slideA.jpg',
@@ -134,16 +195,17 @@ export default class ProjectsSection
                 },
             },
             {
-                name: 'Alzhemer Disease Detection', 
+                name: 'Retinal Disease Classification - OCIT 2024',
                 imageSources:
                 [
-                    './models/projects/madbox/slideA.jpg',
-                    './models/projects/madbox/slideB.jpg'
+                    './models/projects/citrixRedbull/slideA.jpg',
+                    './models/projects/citrixRedbull/slideB.jpg',
+                    './models/projects/citrixRedbull/slideC.jpg'
                 ],
-                floorTexture: this.resources.items.projectsMadboxFloorTexture,
+                floorTexture: this.resources.items.projectsCitrixRedbullFloorTexture,
                 link:
                 {
-                    href: 'https://docs.google.com/document/d/1rJsYhjTXdlbRRBc1Kz2NK-7kcmGkOE1O/edit?usp=sharing&ouid=102644665300775462738&rtpof=true&sd=true',
+                    href: 'https://github.com/slaughterhectic',
                     x: - 4.8,
                     y: - 2,
                     halfExtents:
@@ -153,7 +215,6 @@ export default class ProjectsSection
                     }
                 },
             },
-            
         ]
     }
 

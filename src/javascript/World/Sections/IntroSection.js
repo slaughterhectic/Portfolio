@@ -1,4 +1,6 @@
 import * as THREE from 'three'
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
 
 export default class IntroSection
 {
@@ -159,86 +161,88 @@ export default class IntroSection
 
     setTitles()
     {
-        // Title
-        // this.objects.add({
-        //     base: this.resources.items.introBBase.scene,
-        //     collision: this.resources.items.introBCollision.scene,
-        //     offset: new THREE.Vector3(0, 0, 0),
-        //     rotation: new THREE.Euler(0, 0, 0),
-        //     shadow: { sizeX: 1.5, sizeY: 1.5, offsetZ: - 0.6, alpha: 0.4 },
-        //     mass: 1.5,
-        //     soundName: 'brick'
-        // })
+        // Each letter of "GOURAV" is built from TextGeometry, then routed
+        // through this.objects.add() with its own collision box so it gets
+        // the same physics behaviour as the original brick letters - i.e.
+        // it falls when hit by the car.
+        const fontLoader = new FontLoader()
+        fontLoader.load('./fonts/helvetiker_bold.typeface.json', (font) =>
+        {
+            const text = 'GOURAV'
+            const letterSize = 1.4
+            const letterDepth = 0.6
+            const letterGap = 0.18
 
-        this.objects.add({
-            base: this.resources.items.introDBase.scene, //D
-            collision: this.resources.items.introDCollision.scene,
-            offset: new THREE.Vector3(-3.5, -9.5, 0),
-            rotation: new THREE.Euler(0, 0, 0),
-            duplicated: true,
-            shadow: { sizeX: 1.5, sizeY: 1.5, offsetZ: - 0.6, alpha: 0.4 },
-            mass: 1.5,
-            soundName: 'brick'
-        })
+            // Build per-letter geometries first to know total width for centering
+            const letters = []
+            let totalWidth = 0
+            for(let i = 0; i < text.length; i++)
+            {
+                const geometry = new TextGeometry(text[i], {
+                    font,
+                    size: letterSize,
+                    height: letterDepth,
+                    curveSegments: 6,
+                    bevelEnabled: true,
+                    bevelThickness: 0.04,
+                    bevelSize: 0.03,
+                    bevelOffset: 0,
+                    bevelSegments: 3
+                })
+                geometry.computeBoundingBox()
+                const bb = geometry.boundingBox
+                const w = bb.max.x - bb.min.x
+                const h = bb.max.y - bb.min.y
+                const d = bb.max.z - bb.min.z
+                geometry.center()
+                letters.push({ geometry, w, h, d })
+                totalWidth += w
+            }
+            totalWidth += letterGap * (text.length - 1)
 
-        
-        this.objects.add({
-            base: this.resources.items.introHBase.scene,
-            collision: this.resources.items.introHCollision.scene,
-            offset: new THREE.Vector3(-2.5, -9.5, 0),
-            rotation: new THREE.Euler(0, 0, 0),
-            shadow: { sizeX: 1.5, sizeY: 1.5, offsetZ: - 0.6, alpha: 0.4 },
-            mass: 1.5,
-            soundName: 'brick'
+            const baseY = - 9
+            let cursorX = - totalWidth / 2
+            const palette = ['shadeOrange_001', 'shadeWhite_001', 'shadeGreen_001', 'shadeOrange_001', 'shadeWhite_001', 'shadeGreen_001']
+
+            for(let i = 0; i < text.length; i++)
+            {
+                const { geometry, w, h, d } = letters[i]
+
+                // Visual mesh - parser picks up the shade material from the name
+                const visualMesh = new THREE.Mesh(geometry)
+                visualMesh.name = palette[i % palette.length]
+                const baseContainer = new THREE.Object3D()
+                baseContainer.add(visualMesh)
+
+                // Collision box matching the letter bounds (in body-local space).
+                // After the PI/2 rotation around X, body-local (x, y, z) maps to
+                // world (x, z, y), so we set scale = (width, height, depth).
+                const collisionMesh = new THREE.Mesh(
+                    new THREE.BoxGeometry(1, 1, 1),
+                    new THREE.MeshBasicMaterial()
+                )
+                collisionMesh.name = 'cube_001'
+                collisionMesh.scale.set(w, h, d)
+                const collisionContainer = new THREE.Object3D()
+                collisionContainer.add(collisionMesh)
+
+                const centerX = cursorX + w / 2
+                const centerZ = h / 2 // letter base sits on the floor
+
+                this.objects.add({
+                    base: baseContainer,
+                    collision: collisionContainer,
+                    offset: new THREE.Vector3(centerX, baseY, centerZ),
+                    rotation: new THREE.Euler(Math.PI / 2, 0, 0),
+                    mass: 1.5,
+                    sleep: true,
+                    soundName: 'brick',
+                    shadow: { sizeX: w, sizeY: d, offsetZ: - h / 2, alpha: 0.4 }
+                })
+
+                cursorX += w + letterGap
+            }
         })
-        this.objects.add({
-            base: this.resources.items.introABase.scene,
-            collision: this.resources.items.introACollision.scene,
-            offset: new THREE.Vector3(-1.3, -9.6, 0),
-            rotation: new THREE.Euler(0, 0, 0),
-            shadow: { sizeX: 1.5, sizeY: 1.5, offsetZ: - 0.6, alpha: 0.4 },
-            mass: 1.5,
-            soundName: 'brick'
-        })
-        this.objects.add({
-            base: this.resources.items.introNBase.scene,
-            collision: this.resources.items.introNCollision.scene,
-            offset: new THREE.Vector3(1.5, 0, 0),
-            rotation: new THREE.Euler(0, 0, 0),
-            duplicated: true,
-            shadow: { sizeX: 1.5, sizeY: 1.5, offsetZ: - 0.6, alpha: 0.4 },
-            mass: 1.5,
-            soundName: 'brick'
-        })
-        this.objects.add({
-            base: this.resources.items.introUBase.scene,
-            collision: this.resources.items.introUCollision.scene,
-            offset: new THREE.Vector3(3.5, 0, 0),
-            rotation: new THREE.Euler(0, 0, 0),
-            duplicated: true,
-            shadow: { sizeX: 1.5, sizeY: 1.5, offsetZ: - 0.6, alpha: 0.4 },
-            mass: 1.5,
-            soundName: 'brick'
-        })
-        this.objects.add({
-            base: this.resources.items.introSBase.scene,
-            collision: this.resources.items.introSCollision.scene,
-            offset: new THREE.Vector3(1, 0, 0),
-            rotation: new THREE.Euler(0, 0, 0),
-            shadow: { sizeX: 1.5, sizeY: 1.5, offsetZ: - 0.6, alpha: 0.4 },
-            mass: 1.5,
-            soundName: 'brick'
-        })
-        this.objects.add({
-            base: this.resources.items.introHBase.scene,
-            collision: this.resources.items.introHCollision.scene,
-            offset: new THREE.Vector3(2.3, -9.4, 0),
-            rotation: new THREE.Euler(0, 0, 0),
-            shadow: { sizeX: 1.5, sizeY: 1.5, offsetZ: - 0.6, alpha: 0.4 },
-            mass: 1.5,
-            soundName: 'brick'
-        })
-        
     }
 
     setTiles()

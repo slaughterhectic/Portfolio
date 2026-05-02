@@ -176,14 +176,17 @@ export default class InformationSection
         // Content
         const lines = [
             { text: 'EXPERIENCE', font: '700 40px "Inter", sans-serif', y: 0 },
-            { text: 'MathCo', font: '700 30px "Inter", sans-serif', y: 60 },
-            { text: 'Product Engineer I (Jul 2025 - Present)', font: '400 24px "Inter", sans-serif', y: 100 },
-             { text: 'Product Engineering Intern (Jan 2025 - Jul 2025)', font: '400 24px "Inter", sans-serif', y: 130 },
-            { text: 'Konnexions-KIIT', font: '700 30px "Inter", sans-serif', y: 180 },
-            { text: 'Coordinator (Aug 2024 - Sep 2025)', font: '400 24px "Inter", sans-serif', y: 220 },
-            { text: 'Assistant Coordinator (Aug 2023 - Aug 2024)', font: '400 24px "Inter", sans-serif', y: 250 },
-            { text: 'USC.KIIT', font: '700 30px "Inter", sans-serif', y: 300 },
-            { text: 'ML Lead (Jun 2024 - Jan 2025)', font: '400 24px "Inter", sans-serif', y: 340 }
+            { text: 'MathCo', font: '700 30px "Inter", sans-serif', y: 55 },
+            { text: 'Product Engineer I  (Aug 2025 - Present)', font: '400 22px "Inter", sans-serif', y: 90 },
+            { text: 'Analyst Intern, Product Eng (Jan 2025 - Jul 2025)', font: '400 22px "Inter", sans-serif', y: 118 },
+            { text: 'Freelance Full-Stack & SaaS Engineer', font: '700 26px "Inter", sans-serif', y: 158 },
+            { text: '2018 - Present  |  30+ engagements, Fortune-500', font: '400 22px "Inter", sans-serif', y: 190 },
+            { text: 'CodeGang  -  Founder & Product Architect', font: '700 26px "Inter", sans-serif', y: 226 },
+            { text: '2024 - Present  |  codegang.online', font: '400 22px "Inter", sans-serif', y: 258 },
+            { text: 'Konnexions, KIIT', font: '700 26px "Inter", sans-serif', y: 294 },
+            { text: 'National Hackathon Coordinator (2024 - 2025)', font: '400 22px "Inter", sans-serif', y: 326 },
+            { text: 'KIIT Student Chapter  -  ML Lead (2024 - 2025)', font: '700 26px "Inter", sans-serif', y: 362 },
+            { text: 'Microsoft Certified: Azure Administrator Associate', font: '400 22px "Inter", sans-serif', y: 396 }
         ]
 
         for(const line of lines)
