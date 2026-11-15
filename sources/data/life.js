@@ -54,12 +54,13 @@ export const pets = [
 ]
 
 export const outfits = [
-    { name: 'Founder hoodie', look: { shirt: '#1f1f24', pants: '#2b2f3a', shoes: '#8cff5a' } },
-    { name: 'Office shirt',   look: { shirt: '#f4f1ea', pants: '#1f2a44', shoes: '#3a2a20' } },
-    { name: 'Weekend orange', look: { shirt: '#ff5a36', pants: '#262b45', shoes: '#ffffff' } },
-    { name: 'Kurta',          look: { shirt: '#e8d9b8', pants: '#f3ede0', shoes: '#7a4a34' } },
-    { name: 'Gym',            look: { shirt: '#6b7280', pants: '#111318', shoes: '#ff3b3b' } },
-    { name: 'Night out',      look: { shirt: '#7c3aed', pants: '#0f0f14', shoes: '#f1f1f1' } },
+    { name: 'Founder hoodie', look: { shirt: '#1f1f24', pants: '#2b2f3a', shoes: '#8cff5a', sleeves: 'long',  legs: 'long',   top: 'normal' } },
+    { name: 'Office shirt',   look: { shirt: '#f4f1ea', pants: '#1f2a44', shoes: '#3a2a20', sleeves: 'long',  legs: 'long',   top: 'normal' } },
+    { name: 'Weekend tee',    look: { shirt: '#ff5a36', pants: '#262b45', shoes: '#ffffff', sleeves: 'short', legs: 'long',   top: 'normal' } },
+    { name: 'Kurta',          look: { shirt: '#e8d9b8', pants: '#f3ede0', shoes: '#7a4a34', sleeves: 'long',  legs: 'long',   top: 'long' } },
+    { name: 'Gym',            look: { shirt: '#6b7280', pants: '#111318', shoes: '#ff3b3b', sleeves: 'none',  legs: 'shorts', top: 'normal' } },
+    { name: 'Beach',          look: { shirt: '#22d3ee', pants: '#f97316', shoes: '#f5f5f4', sleeves: 'short', legs: 'shorts', top: 'normal' } },
+    { name: 'Night out',      look: { shirt: '#7c3aed', pants: '#0f0f14', shoes: '#f1f1f1', sleeves: 'long',  legs: 'long',   top: 'normal' } },
 ]
 
 export const npcs = [
@@ -68,7 +69,7 @@ export const npcs = [
         name: 'Aarav',
         role: 'CodeGang · teammate',
         position: [ 76.6, 55.8 ],
-        look: { shirt: '#8cff5a', pants: '#1b1b26', hair: '#0e0c0c', skin: '#b9794f', shoes: '#22222c' },
+        look: { sleeves: 'long', shirt: '#8cff5a', pants: '#1b1b26', hair: '#0e0c0c', skin: '#b9794f', shoes: '#22222c' },
         greeting: `Hey! Welcome to <strong>CodeGang</strong>. Gourav founded this place in 2023 and still architects the product. What do you want to know?`,
         topics: [
             {
@@ -100,7 +101,7 @@ export const npcs = [
         name: 'Meera',
         role: 'MathCo · engagement lead',
         position: [ 29.6, 8.4 ],
-        look: { body: 'female', hairStyle: 'Long', shirt: '#ff7a1a', pants: '#2c3550', hair: '#2a1710', skin: '#c98f66', shoes: '#f4f4f4' },
+        look: { sleeves: 'long', top: 'long', body: 'female', hairStyle: 'Long', shirt: '#ff7a1a', pants: '#2c3550', hair: '#2a1710', skin: '#c98f66', shoes: '#f4f4f4' },
         greeting: `Gourav works here at <strong>MathCo</strong> as a Product Engineer I, in the Product Engineering service line. Ask away.`,
         topics: [
             {
@@ -125,7 +126,7 @@ export const npcs = [
         name: 'Prof. Rao',
         role: 'KIIT · faculty',
         position: [ 18, 34 ],
-        look: { beard: true, hairStyle: 'Buzzed', shirt: '#f5f0e6', pants: '#5a4634', hair: '#8d8d8d', skin: '#a9714b', shoes: '#3a2a20' },
+        look: { sleeves: 'long', beard: true, hairStyle: 'Buzzed', shirt: '#f5f0e6', pants: '#5a4634', hair: '#8d8d8d', skin: '#a9714b', shoes: '#3a2a20' },
         greeting: `Ah, a visitor. Gourav studied here at <strong>KIIT, Bhubaneswar</strong>, from 2021 to 2025.`,
         topics: [
             {
@@ -149,7 +150,7 @@ export const npcs = [
         name: 'Dr. Iyer',
         role: 'Research mentor',
         position: [ 22.5, 16.6 ],
-        look: { shirt: '#5b3fd6', pants: '#23263a', hair: '#1c1512', skin: '#8f5c3b', shoes: '#f1f1f1' },
+        look: { sleeves: 'long', shirt: '#5b3fd6', pants: '#23263a', hair: '#1c1512', skin: '#8f5c3b', shoes: '#f1f1f1' },
         greeting: `You found the research corner. Gourav has <strong>two peer-reviewed publications</strong> and an accepted <strong>UK patent</strong>.`,
         topics: [
             {
@@ -173,7 +174,7 @@ export const npcs = [
         name: 'Lucas',
         role: 'Osten Group · Brazil',
         position: [ 30.5, 19.4 ],
-        look: { shirt: '#f2c230', pants: '#2f5d3a', hair: '#3b2414', skin: '#d9a47c', shoes: '#ffffff' },
+        look: { legs: 'shorts', shirt: '#f2c230', pants: '#2f5d3a', hair: '#3b2414', skin: '#d9a47c', shoes: '#ffffff' },
         greeting: `Olá! I'm with <strong>Osten Group</strong> in Brazil. Gourav built our chatbot platform.`,
         topics: [
             {
@@ -225,7 +226,7 @@ export const npcs = [
         name: 'Cloud rep',
         role: 'Hackathon sponsor',
         position: [ 9.5, 33.5 ],
-        look: { shirt: '#3b82f6', pants: '#e5e7eb', hair: '#3a2a1c', skin: '#d6a47e', shoes: '#111111' },
+        look: { sleeves: 'long', shirt: '#3b82f6', pants: '#e5e7eb', hair: '#3a2a1c', skin: '#d6a47e', shoes: '#111111' },
         greeting: `A hackathon with 900+ participants? Google Cloud credits are on the table.`,
         topics: []
     },
@@ -234,7 +235,7 @@ export const npcs = [
         name: 'Azure rep',
         role: 'Hackathon sponsor',
         position: [ 14, 39.6 ],
-        look: { shirt: '#0ea5e9', pants: '#1f2937', hair: '#0f0d0c', skin: '#a56f4a', shoes: '#f4f4f4' },
+        look: { sleeves: 'long', shirt: '#0ea5e9', pants: '#1f2937', hair: '#0f0d0c', skin: '#a56f4a', shoes: '#f4f4f4' },
         greeting: `50+ colleges taking part? Microsoft Azure is in.`,
         topics: []
     },

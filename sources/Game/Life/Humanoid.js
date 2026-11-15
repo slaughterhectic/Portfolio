@@ -85,15 +85,22 @@ export class Humanoid
         if(mesh.geometry.userData.partIndices)
             return mesh.geometry.userData.partIndices
 
+        // 0 skin, 1 torso, 2 hips and thighs, 3 feet, 4 forearms, 5 upper arms, 6 lower legs
         const partOf = (name) =>
         {
             name = name.toLowerCase()
 
-            if(name.match(/^(head|neck|hand|index|middle|ring|pinky|thumb|lowerarm)/))
+            if(name.match(/^(head|neck|hand|index|middle|ring|pinky|thumb)/))
                 return 0
+            if(name.match(/^lowerarm/))
+                return 4
+            if(name.match(/^upperarm/))
+                return 5
             if(name.match(/^(foot|ball)/))
                 return 3
-            if(name.match(/^(pelvis|thigh|calf)/))
+            if(name.match(/^calf/))
+                return 6
+            if(name.match(/^(pelvis|thigh)/))
                 return 2
 
             return 1
@@ -103,7 +110,7 @@ export class Humanoid
         const skinIndex = mesh.geometry.attributes.skinIndex
         const skinWeight = mesh.geometry.attributes.skinWeight
         const indices = new Uint8Array(skinIndex.count)
-        const weights = [ 0, 0, 0, 0 ]
+        const weights = [ 0, 0, 0, 0, 0, 0, 0 ]
 
         for(let i = 0; i < skinIndex.count; i++)
         {
@@ -152,6 +159,13 @@ export class Humanoid
         const clips = new Map()
 
         for(const clip of gltf.animations)
+        {
+            if(clip.tracks.some((track) => track.name.startsWith('pelvis.')))
+                clips.set(clip.name, clip)
+        }
+
+        // Swimming clips live in their own small file
+        for(const clip of game.resources.characterSwimModel.animations)
         {
             if(clip.tracks.some((track) => track.name.startsWith('pelvis.')))
                 clips.set(clip.name, clip)
@@ -278,7 +292,20 @@ export class Humanoid
     {
         this.look = { ...this.look, ...look }
 
-        const parts = [ null, new THREE.Color(this.look.shirt), new THREE.Color(this.look.pants), new THREE.Color(this.look.shoes) ]
+        // The cut of the clothes decides which regions are fabric and which stay skin
+        const shirt = new THREE.Color(this.look.shirt)
+        const pants = new THREE.Color(this.look.pants)
+        const sleeves = this.look.sleeves ?? 'short'
+        const legs = this.look.legs ?? 'long'
+        const parts = [
+            null,
+            shirt,
+            this.look.top === 'long' ? shirt : pants,
+            new THREE.Color(this.look.shoes),
+            sleeves === 'long' ? shirt : null,
+            sleeves === 'none' ? null : shirt,
+            legs === 'shorts' ? null : pants,
+        ]
         const indices = this.partIndices
         const colors = this.mesh.geometry.attributes.color
         const cloth = this.mesh.geometry.attributes.cloth

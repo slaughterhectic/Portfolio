@@ -145,6 +145,7 @@ export class Game
                 [ 'vehiclesModel',                         `life/vehicles.glb${cb}`,                                                             'gltf' ],
                 [ 'lettersModel',                          `life/letters.glb${cb}`,                                                              'gltf' ],
                 [ 'furnitureModel',                        `life/furniture.glb${cb}`,                                                            'gltf' ],
+                [ 'characterSwimModel',                    `character/swim.glb${cb}`,                                                            'gltf' ],
                 [ 'characterFemaleModel',                  `character/character-female.glb${cb}`,                                                'gltf' ],
                 [ 'characterSkinFemaleLight',              `character/skin-female-light.jpg${cb}`,                                               'texture', (resource) => { resource.flipY = false; resource.colorSpace = THREE.SRGBColorSpace; } ],
                 [ 'characterSkinLight',                    `character/skin-light.jpg${cb}`,                                                      'texture', (resource) => { resource.flipY = false; resource.colorSpace = THREE.SRGBColorSpace; } ],

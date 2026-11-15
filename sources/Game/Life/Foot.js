@@ -18,6 +18,9 @@ export class Foot
         this.height = 1.25
         this.radius = 0.26
         this.walkSpeed = 3.1
+        this.swimSpeed = 2.2
+        this.swimDepth = 0.62
+        this.swimming = false
         this.sprintSpeed = 5.6
         this.jumpVelocity = 6.2
         this.gravity = - 19
@@ -164,7 +167,7 @@ export class Foot
     {
         const now = this.game.ticker.elapsed
 
-        if(!this.active || this.locked || !this.grounded || now < this.punchUntil)
+        if(!this.active || this.locked || !this.grounded || this.swimming || now < this.punchUntil)
             return false
 
         this.punchCount = (this.punchCount ?? 0) + 1
@@ -215,8 +218,17 @@ export class Foot
             this.emote = null
         }
 
+        // Deep water: swim at the surface instead of walking on the seabed
+        const here = this.body.translation()
+        const seabed = groundAt(here.x, here.z, 0)
+        const surface = this.game.water.surfaceElevation
+        this.swimming = seabed < surface - 0.62
+
+        if(this.swimming)
+            jump = false
+
         // Horizontal velocity (eased so starts and stops are not abrupt)
-        const targetSpeed = moving ? (sprint ? this.sprintSpeed : this.walkSpeed) * strength : 0
+        const targetSpeed = moving ? (this.swimming ? this.swimSpeed : (sprint ? this.sprintSpeed : this.walkSpeed)) * strength : 0
         const easing = 1 - Math.exp(- delta * (this.grounded ? 14 : 4))
         this.velocity.x += (this.desired.x * targetSpeed - this.velocity.x) * easing
         this.velocity.z += (this.desired.z * targetSpeed - this.velocity.z) * easing
@@ -244,24 +256,18 @@ export class Foot
             y: this.verticalVelocity * delta,
             z: this.velocity.z * delta
         }
+
+        if(this.swimming)
+        {
+            // Float: ease the feet towards the swimming depth, no gravity
+            const feet = here.y - this.centerOffset
+            translation.y = (surface - this.swimDepth - feet) * Math.min(1, delta * 6)
+            this.verticalVelocity = 0
+        }
         this.controller.computeColliderMovement(this.collider, translation, undefined, this.game.physics.categories.object)
 
         const movement = this.controller.computedMovement()
         const current = this.body.translation()
-
-        // No walking into the water: the step is cancelled when the ground ahead is below the shore
-        if(movement.x !== 0 || movement.z !== 0)
-        {
-            const ahead = groundAt(current.x + movement.x * 3, current.z + movement.z * 3, 0)
-
-            if(ahead < - 0.28)
-            {
-                movement.x = 0
-                movement.z = 0
-                this.velocity.x = 0
-                this.velocity.z = 0
-            }
-        }
 
         this.body.setNextKinematicTranslation({
             x: current.x + movement.x,
@@ -270,7 +276,7 @@ export class Foot
         })
 
         const wasGrounded = this.grounded
-        this.grounded = this.controller.computedGrounded() && this.verticalVelocity <= 0
+        this.grounded = this.swimming || (this.controller.computedGrounded() && this.verticalVelocity <= 0)
 
         if(this.grounded)
             this.airTime = 0
@@ -313,6 +319,10 @@ export class Foot
         if(now < this.punchUntil)
         {
             this.humanoid.play(this.punchName, 0.06, { once: true, timeScale: 1.5 })
+        }
+        else if(this.swimming)
+        {
+            this.humanoid.play(this.speed > 0.4 ? 'Swim_Fwd_Loop' : 'Swim_Idle_Loop', 0.3)
         }
         else if(this.emote)
         {

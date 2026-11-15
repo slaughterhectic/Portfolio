@@ -958,7 +958,7 @@ export class Player
             this.position.y += 0.6
 
             // Fell in the water
-            if(this.foot.position.y < - 1.5 && this.state === Player.STATE_DEFAULT)
+            if(this.foot.position.y < - 4 && this.state === Player.STATE_DEFAULT)
                 this.respawn()
         }
         else
