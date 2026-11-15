@@ -1,0 +1,274 @@
+/**
+ * On-foot prompt, dialogs and missions
+ */
+.vehicle-prompt
+    position absolute
+    left 50%
+    bottom 34px
+    display flex
+    align-items center
+    gap 10px
+    padding 8px 16px 9px 10px
+    background radial-gradient(ellipse at top left, #251f2b, #1d1721)
+    color #ffffff
+    font-size 16px
+    font-weight 700
+    pointer-events none
+    opacity 0
+    transform translate(-50%, 16px)
+    transition opacity 0.25s, transform 0.35s cubic-bezier(0.4, 1.6, 0.65, 1)
+    -webkit-user-select none
+    user-select none
+
+    &.is-visible
+        opacity 1
+        transform translate(-50%, 0)
+
+    // Floating above a vehicle
+    &.is-anchored
+        bottom auto
+        transition opacity 0.25s
+        transform translate(-50%, -50%)
+        border 2px solid #ffceca
+
+    html.is-mode-touch &,
+    html.is-mode-gamepad &,
+    html.has-dialog &
+        display none
+
+    .key
+        display flex
+        align-items center
+        justify-content center
+        min-width 28px
+        height 28px
+        padding 0 6px
+        border 2px solid #ffceca
+        color #ffceca
+        font-weight 900
+        font-size 15px
+
+.touch-buttons .list .js-button.vehicle
+    @media only screen and (max-width 520px)
+        padding-left 3.5vw
+        padding-right 3.5vw
+
+/**
+ * Mission tracker
+ */
+.mission-tracker
+    position absolute
+    top 20px
+    left 20px
+    width 300px
+    max-width calc(100% - 110px)
+    padding 12px 16px 14px 16px
+    background radial-gradient(ellipse at top left, #251f2b, #1d1721)
+    color #ffffff
+    pointer-events none
+    opacity 0
+    transform translateX(-20px)
+    transition opacity 0.3s, transform 0.45s cubic-bezier(0.4, 1.6, 0.65, 1)
+    -webkit-user-select none
+    user-select none
+
+    &.is-visible
+        opacity 1
+        transform translateX(0)
+
+    html.has-dialog &
+        opacity 0
+
+    @media only screen and (max-width 520px)
+        top 12px
+        left 12px
+        width 230px
+        padding 9px 12px 10px 12px
+
+    .eyebrow
+        font-size 11px
+        font-weight 900
+        letter-spacing 0.12em
+        text-transform uppercase
+        color #ffceca
+        margin-bottom 2px
+
+    .title
+        font-family "Amatic SC", sans-serif
+        font-weight 700
+        font-size 1.7rem
+        line-height 1.05
+        color #d5ff95
+        margin-bottom 6px
+
+    .objective
+        font-size 14px
+        line-height 1.35
+        color #e9e3ee
+
+    .meta
+        display flex
+        align-items center
+        gap 10px
+        margin-top 9px
+
+        &:empty
+            display none
+
+    .progress
+        flex 1
+        height 4px
+        background #3a3142
+
+        .fill
+            height 100%
+            width 100%
+            background #d5ff95
+            transform-origin 0 0
+            transform scaleX(0)
+            transition transform 0.35s ease-out
+
+    .count
+    .timer
+        font-size 13px
+        font-weight 900
+        font-variant-numeric tabular-nums
+
+    .timer
+        color #ffceca
+
+        &.is-low
+            color #ff6b6b
+
+/**
+ * Dialog
+ */
+.dialog
+    --width @css{ min(680px, calc(100% - 32px)) }
+
+    position absolute
+    left calc(50% - var(--width) / 2)
+    bottom 28px
+    width var(--width)
+    padding 18px 22px 16px 22px
+    background radial-gradient(ellipse at top left, #2a2331, #1d1721)
+    color #ffffff
+    opacity 0
+    pointer-events none
+    transform translateY(30px)
+    transition opacity 0.25s, transform 0.4s cubic-bezier(0.4, 1.4, 0.65, 1)
+
+    &.is-visible
+        opacity 1
+        pointer-events auto
+        transform translateY(0)
+
+    @media only screen and (max-width 520px)
+        bottom 14px
+        padding 14px 16px 12px 16px
+
+    .head
+        display flex
+        align-items baseline
+        flex-wrap wrap
+        gap 4px 12px
+        margin-bottom 8px
+
+    .name
+        font-family "Amatic SC", sans-serif
+        font-weight 700
+        font-size 2rem
+        line-height 1
+        color #d5ff95
+
+    .role
+        font-size 12px
+        font-weight 900
+        letter-spacing 0.1em
+        text-transform uppercase
+        color #ffceca
+
+    .text
+        min-height 3.2em
+        font-size 17px
+        line-height 1.5
+        color #f3eef7
+        text-wrap pretty
+
+        @media only screen and (max-width 520px)
+            font-size 15px
+
+        strong
+            color #ffe08a
+            font-weight 700
+
+    .choices
+        display flex
+        flex-wrap wrap
+        gap 8px
+        margin-top 14px
+
+        &:empty
+            display none
+
+    .choice
+        padding 7px 13px 8px 13px
+        border 2px solid #4a3f55
+        color #ffffff
+        font-size 14px
+        font-weight 700
+        text-align left
+        transition border-color 0.15s, background 0.15s, color 0.15s
+
+        .index
+            color #ffceca
+            margin-right 7px
+            font-weight 900
+
+            html.is-mode-touch &
+                display none
+
+        &.is-seen
+            color #a79db1
+
+        &.is-mission
+            border-color #d5ff95
+            color #d5ff95
+
+        &.is-link
+            border-color #ffceca
+
+        html:not(.is-mode-touch) &:hover,
+        &:focus-visible
+            border-color #ffffff
+            background #3a3142
+            color #ffffff
+
+    .foot
+        display flex
+        justify-content space-between
+        align-items center
+        margin-top 12px
+        font-size 12px
+        color #a79db1
+
+        .next
+            padding 4px 0
+            color #ffceca
+            font-weight 900
+            letter-spacing 0.06em
+            text-transform uppercase
+
+        kbd
+            font-family inherit
+            font-weight 900
+            color #ffffff
+
+        html.is-mode-touch & .hint
+            visibility hidden
+
+@media (prefers-reduced-motion: reduce)
+    .vehicle-prompt
+    .mission-tracker
+    .dialog
+        transition-duration 0.01s
