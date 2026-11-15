@@ -179,13 +179,17 @@ export class Player
                 {
                     const accelerating = Math.abs(this.game.player.accelerating) * 0.5
                     const boosting = this.game.player.boosting + 1
-                    const volume = Math.max(0.05, accelerating * boosting * 0.8)
+                    // Each vehicle has its own voice (a bicycle has none), and a parked engine is off
+                    const garage = this.game.life?.garage
+                    const voice = (garage && garage.constructor.TYPES[garage.activeType].sound) || { volume: 1, rate: 1 }
+                    const engineOn = this.mode === Player.MODE_VEHICLE ? 1 : 0
+                    const volume = Math.max(0.05, accelerating * boosting * 0.8) * voice.volume * engineOn
                     const delta = volume - item.volume
                     const easing = delta > 0 ? 10 : 2.5
                     
                     item.volume += delta * this.game.ticker.deltaScaled * easing
 
-                    const rate = remapClamp(accelerating * boosting, 0, 1, 0.6, 1.1)
+                    const rate = remapClamp(accelerating * boosting, 0, 1, 0.6, 1.1) * voice.rate
                     item.rate += (rate - item.rate) * this.game.ticker.deltaScaled * 5
                 }
             })

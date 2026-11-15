@@ -19,13 +19,13 @@ export class Garage
 
     static TYPES = {
         default:   { label: 'Enter', handling: { topSpeed: 5,   topSpeedBoost: 40, engineForceAmplitude: 300, steeringAmplitude: 0.5 } },
-        sports:    { label: 'Enter', node: 'veh_sports',    handling: { topSpeed: 6.5, topSpeedBoost: 48, engineForceAmplitude: 340, steeringAmplitude: 0.5 } },
-        police:    { label: 'Enter', node: 'veh_police',    handling: { topSpeed: 6,   topSpeedBoost: 44, engineForceAmplitude: 330, steeringAmplitude: 0.5 } },
-        suv:       { label: 'Enter', node: 'veh_suv',       handling: { topSpeed: 5,   topSpeedBoost: 36, engineForceAmplitude: 310, steeringAmplitude: 0.48 } },
-        pickup:    { label: 'Enter', node: 'veh_pickup',    handling: { topSpeed: 4.8, topSpeedBoost: 34, engineForceAmplitude: 310, steeringAmplitude: 0.46 } },
-        motorbike: { label: 'Ride',  node: 'veh_motorbike', rider: { x: - 0.18, y: 0.74 }, handling: { topSpeed: 6.5, topSpeedBoost: 48, engineForceAmplitude: 320, steeringAmplitude: 0.56 } },
-        vespa:     { label: 'Ride',  node: 'veh_vespa',     rider: { x: - 0.28, y: 0.72 }, handling: { topSpeed: 4.2, topSpeedBoost: 20, engineForceAmplitude: 240, steeringAmplitude: 0.58 } },
-        bicycle:   { label: 'Ride',  node: 'veh_bicycle',   rider: { x: - 0.3,  y: 0.88 }, handling: { topSpeed: 2.6, topSpeedBoost: 7.5, engineForceAmplitude: 170, steeringAmplitude: 0.6 } },
+        sports:    { label: 'Enter', node: 'veh_sports',    sound: { volume: 1.15, rate: 1.25 }, handling: { topSpeed: 6.5, topSpeedBoost: 48, engineForceAmplitude: 340, steeringAmplitude: 0.5 } },
+        police:    { label: 'Enter', node: 'veh_police',    sound: { volume: 1, rate: 1.1 }, handling: { topSpeed: 6,   topSpeedBoost: 44, engineForceAmplitude: 330, steeringAmplitude: 0.5 } },
+        suv:       { label: 'Enter', node: 'veh_suv',       sound: { volume: 0.9, rate: 0.85 }, handling: { topSpeed: 5,   topSpeedBoost: 36, engineForceAmplitude: 310, steeringAmplitude: 0.48 } },
+        pickup:    { label: 'Enter', node: 'veh_pickup',    sound: { volume: 1, rate: 0.72 }, handling: { topSpeed: 4.8, topSpeedBoost: 34, engineForceAmplitude: 310, steeringAmplitude: 0.46 } },
+        motorbike: { label: 'Ride',  node: 'veh_motorbike', rider: { x: - 0.18, y: 0.74 }, sound: { volume: 0.9, rate: 1.65 }, handling: { topSpeed: 6.5, topSpeedBoost: 48, engineForceAmplitude: 320, steeringAmplitude: 0.56 } },
+        vespa:     { label: 'Ride',  node: 'veh_vespa',     rider: { x: - 0.28, y: 0.72 }, sound: { volume: 0.6, rate: 2.1 }, handling: { topSpeed: 4.2, topSpeedBoost: 20, engineForceAmplitude: 240, steeringAmplitude: 0.58 } },
+        bicycle:   { label: 'Ride',  node: 'veh_bicycle',   rider: { x: - 0.3,  y: 0.88 }, sound: { volume: 0, rate: 1 }, handling: { topSpeed: 2.6, topSpeedBoost: 7.5, engineForceAmplitude: 170, steeringAmplitude: 0.6 } },
     }
 
     constructor()

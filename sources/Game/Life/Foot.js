@@ -1,6 +1,7 @@
 import * as THREE from 'three/webgpu'
 import { Game } from '../Game.js'
 import { Humanoid } from './Humanoid.js'
+import { groundAt } from './Npcs.js'
 import { smallestAngle } from '../utilities/maths.js'
 
 /**
@@ -247,6 +248,20 @@ export class Foot
 
         const movement = this.controller.computedMovement()
         const current = this.body.translation()
+
+        // No walking into the water: the step is cancelled when the ground ahead is below the shore
+        if(movement.x !== 0 || movement.z !== 0)
+        {
+            const ahead = groundAt(current.x + movement.x * 3, current.z + movement.z * 3, 0)
+
+            if(ahead < - 0.28)
+            {
+                movement.x = 0
+                movement.z = 0
+                this.velocity.x = 0
+                this.velocity.z = 0
+            }
+        }
 
         this.body.setNextKinematicTranslation({
             x: current.x + movement.x,
